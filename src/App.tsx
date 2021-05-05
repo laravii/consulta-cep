@@ -5,16 +5,15 @@ import { Button, Card, Form } from 'react-bootstrap'
 import './styles/global.css'
 import { api } from './services/api'
 import { api_keys } from './services/api_keys'
-
 interface Inputs {
-  cep: string
+  cep: number
   adress: string
   city: string
   locale: string
   burgh: string
 }
 const initialValues: Inputs = {
-  cep: '',
+  cep: 0,
   adress: '',
   city: '',
   locale: '',
@@ -22,10 +21,7 @@ const initialValues: Inputs = {
 }
 
 const validationSchema = yup.object().shape({
-  cep: yup
-    .string()
-    .test('len', 'Por favor, digite o CEP completo', (val) => val?.length === 8)
-    .required(),
+  cep: yup.number().required().typeError('Utilize somente números'),
   adress: yup.string().required(),
   city: yup.string().required(),
   locale: yup.string().required(),
@@ -67,13 +63,13 @@ function App() {
           {(props) => (
             <FormikForm>
               <Form.Group controlId="cep">
-                <p>{getError}</p>
                 <Form.Label>CEP</Form.Label>
                 <Field
                   id="cep"
                   className="form-control"
                   name="cep"
                   type="text"
+                  minLength="8"
                   maxLength="8"
                   placeholder="01010100"
                   onBlur={(ev: any) => {
@@ -81,9 +77,9 @@ function App() {
                   }}
                   value={props.values.cep}
                 />
-                <h6>somente números</h6>
+                <small>{getError}</small>
               </Form.Group>
-              <p>{props.errors.cep}</p>
+              <small>{props.errors.cep}</small>
               <Form.Group controlId="adress">
                 <Form.Label>Logradouro</Form.Label>
                 <Field

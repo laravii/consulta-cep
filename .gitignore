@@ -22,3 +22,5 @@ src/services/api_keys.ts
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.vercel
