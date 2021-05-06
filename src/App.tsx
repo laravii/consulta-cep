@@ -21,7 +21,10 @@ const initialValues: Inputs = {
 }
 
 const validationSchema = yup.object().shape({
-  cep: yup.number().required().typeError('Utilize somente números'),
+  cep: yup
+    .string()
+    .matches(/^[0-9]{8}$/, 'Utilize somente números')
+    .required(),
   adress: yup.string().required(),
   city: yup.string().required(),
   locale: yup.string().required(),
